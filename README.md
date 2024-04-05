@@ -21,5 +21,5 @@ IMG:
 # Gráficos
 La interfaz gráfica se creo utilizando la librería extraída [Gamelib](https://github.com/dessaya/python-gamelib)
 
-![Tetris](img\tetris.jpg)
-![Puntaje](img\puntaje.jpg)
+![Tetris](https://github.com/SebaB29/Tetris/blob/main/img/tetris.jpg)
+![Puntaje](https://github.com/SebaB29/Tetris/blob/main/img/puntaje.jpg)
