@@ -99,7 +99,7 @@ def obtener_piezas():
     """..."""
 
     piezas = {}
-    with open("piezas.txt") as archivo:
+    with open("resources\piezas.txt") as archivo:
         reader = csv.reader(archivo, delimiter=" ")
         for grupo_coordenadas in reader:
             pieza = grupo_coordenadas[-1]

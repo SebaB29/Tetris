@@ -1,5 +1,5 @@
-from inter_grafica import *
-from tetris import *
+from graphics.inter_grafica import *
+from src.tetris import *
 
 ESPERA_DESCENDER = 20
 
@@ -45,8 +45,9 @@ def main():
         gamelib.draw_end()
 
 
-    nombre_jugador = (gamelib.input("Ingrese su nombre")).upper()
-    guardar_puntaje(nombre_jugador, juego["PUNTOS"])
+    nombre_jugador = (gamelib.input("Ingrese su nombre"))
+    if nombre_jugador:
+        guardar_puntaje(nombre_jugador.upper(), juego["PUNTOS"])
     tabla_puntuaciones = cargar_tabla_puntuaciones()
 
     gamelib.draw_begin()

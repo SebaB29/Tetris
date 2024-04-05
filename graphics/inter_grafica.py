@@ -1,4 +1,4 @@
-import gamelib
+import graphics.gamelib as gamelib
 
 ANCHO_VENTANA, ALTO_VENTANA = (500, 500)
 MARGEN_X, MARGEN_Y = (10, 40)
