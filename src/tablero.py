@@ -1,13 +1,11 @@
 POSICION_LIBRE = ""
-FILAS = 18
-COLUMNAS = 9
 
 
 class Tablero:
 
-    def __init__(self: object) -> None:
+    def __init__(self: object, filas: int, columnas: int) -> None:
         self.tablero = [
-            [POSICION_LIBRE for columna in range(COLUMNAS)] for fila in range(FILAS)
+            [POSICION_LIBRE for columna in range(columnas)] for fila in range(filas)
         ]
 
     def actualizar(
@@ -30,7 +28,7 @@ class Tablero:
     def get_tablero(self) -> list:
         return self.tablero
 
-    def revisar_coordenadas_pieza(self: object, pieza: tuple) -> bool:
+    def son_coordenadas_validas(self: object, pieza: tuple) -> bool:
         """..."""
 
         for coordenada in pieza:

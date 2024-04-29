@@ -9,8 +9,7 @@ def main():
     gamelib.resize(ANCHO_VENTANA, ALTO_VENTANA)
 
     piezas = obtener_piezas()
-    juego = crear_juego(FILAS, COLUMNAS, piezas)
-    iniciar_juego(juego)
+    juego = crear_juego(piezas)
 
     timer_bajar = ESPERA_DESCENDER
     while gamelib.loop(fps=90) and not terminar_juego(juego["PIEZA_ACTUAL"]):
@@ -42,7 +41,7 @@ def main():
         graficar_elemento(juego["TABLERO"].get_tablero(), PIEZA)
         graficar_elemento(juego["TABLERO"].get_tablero(), SUPERFICIE)
         graficar_tablero_pieza_siguiente()
-        graficar_pieza_siguiente(juego["CUADRO_PIEZA_SIG"], PIEZA)
+        graficar_pieza_siguiente(juego["CUADRO_PIEZA_SIG"].get_tablero(), PIEZA)
         gamelib.draw_end()
 
     nombre_jugador = gamelib.input("Ingrese su nombre")
@@ -62,4 +61,5 @@ def main():
         main()
 
 
-gamelib.init(main)
+if __name__ == "__main__":
+    gamelib.init(main)

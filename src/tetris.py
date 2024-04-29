@@ -3,33 +3,29 @@ from src.tablero import Tablero
 from src.pieza import Pieza
 import csv
 
+FILAS_TABLERO = 18
+COLUMNAS_TABLERO = 9
+FILAS_TABLERO_P_SIGUIENTE = FILAS_TABLERO // 2
+COLUMNAS_TABLERO_P_SIGUIENTE = COLUMNAS_TABLERO // 2
+
 PIEZA = "@"
 SUPERFICIE = "#"
-POSICION_LIBRE = ""
 IZQUIERDA, DERECHA = -1, 1
 
 
 # ESTADO DEL JUEGO
-def crear_juego(filas_tablero, columnas_tablero, piezas):
+def crear_juego(piezas):
     """..."""
 
     return {
-        "TABLERO": Tablero(),
+        "TABLERO": Tablero(FILAS_TABLERO, COLUMNAS_TABLERO),
         "PIEZA_ACTUAL": Pieza(generar_pieza(piezas)),
-        "CUADRO_PIEZA_SIG": crear_tablero(filas_tablero // 2, columnas_tablero),
-        "PIEZA_SIGUIENTE": generar_pieza(piezas),
+        "CUADRO_PIEZA_SIG": Tablero(
+            FILAS_TABLERO_P_SIGUIENTE, COLUMNAS_TABLERO_P_SIGUIENTE
+        ),
+        "PIEZA_SIGUIENTE": Pieza(generar_pieza(piezas)),
         "PUNTOS": 0,
     }
-
-
-def iniciar_juego(juego):
-    """..."""
-
-    juego["TABLERO"].actualizar(
-        elemento=PIEZA, coordenadas_elemento=juego["PIEZA_ACTUAL"].get_coordenadas()
-    )
-
-    colocar_elemento(juego["CUADRO_PIEZA_SIG"], juego["PIEZA_SIGUIENTE"], PIEZA)
 
 
 def avanzar_estado_juego(juego, piezas):
@@ -40,7 +36,7 @@ def avanzar_estado_juego(juego, piezas):
     )
 
     coordenadas_deseadas = juego["PIEZA_ACTUAL"].trasladarse()
-    if juego["TABLERO"].revisar_coordenadas_pieza(coordenadas_deseadas):
+    if juego["TABLERO"].son_coordenadas_validas(coordenadas_deseadas):
         juego["PIEZA_ACTUAL"].actualizar(coordenadas_deseadas)
 
     else:
@@ -52,48 +48,30 @@ def avanzar_estado_juego(juego, piezas):
         )
 
         juego["PUNTOS"] += 1
-        juego["PIEZA_SIGUIENTE"] = trasladar_pieza(
-            juego["PIEZA_SIGUIENTE"], len(juego["TABLERO"].get_tablero()[0]) // 2, 0
-        )
+        intercambiar_pieza_actual_por_siguiente(juego, piezas)
 
-        if juego["TABLERO"].revisar_coordenadas_pieza(juego["PIEZA_SIGUIENTE"]):
+    juego["CUADRO_PIEZA_SIG"].actualizar(
+        elemento=PIEZA,
+        coordenadas_elemento=juego["PIEZA_SIGUIENTE"].get_coordenadas(),
+    )
 
-            borrar_elemento(juego["CUADRO_PIEZA_SIG"], PIEZA)
-            juego["PIEZA_ACTUAL"], juego["PIEZA_SIGUIENTE"] = Pieza(
-                juego["PIEZA_SIGUIENTE"]
-            ), generar_pieza(piezas)
-            colocar_elemento(juego["CUADRO_PIEZA_SIG"], juego["PIEZA_SIGUIENTE"], PIEZA)
-        else:
-            juego["PIEZA_ACTUAL"] = None
+
+def intercambiar_pieza_actual_por_siguiente(juego, piezas):
+
+    pieza_trasladada = juego["PIEZA_SIGUIENTE"].trasladarse(COLUMNAS_TABLERO // 2, 0)
+
+    if juego["TABLERO"].son_coordenadas_validas(pieza_trasladada):
+        juego["PIEZA_ACTUAL"] = Pieza(pieza_trasladada)
+        juego["PIEZA_SIGUIENTE"] = Pieza(generar_pieza(piezas))
+
+    else:
+        juego["PIEZA_ACTUAL"] = None
 
 
 def terminar_juego(pieza_actual):
     """..."""
 
     return pieza_actual == None
-
-
-# ACCIONES TABLERO
-def crear_tablero(filas, columnas):
-    """..."""
-
-    return [[POSICION_LIBRE for columna in range(columnas)] for fila in range(filas)]
-
-
-def colocar_elemento(tablero, coordenadas_elemento, elemento):
-    """..."""
-
-    for coordenada_x, coordenada_y in coordenadas_elemento:
-        tablero[coordenada_y][coordenada_x] = elemento
-
-
-def borrar_elemento(tablero, elemento):
-    """..."""
-
-    for fila in range(len(tablero)):
-        for columna in range(len(tablero[fila])):
-            if tablero[fila][columna] == elemento:
-                tablero[fila][columna] = POSICION_LIBRE
 
 
 # ACCIONES PIEZA
@@ -121,21 +99,12 @@ def generar_pieza(piezas):
     return piezas[pieza][0]
 
 
-def trasladar_pieza(coordenadas_pieza, desplazamiento_x, desplazamiento_y):
-    """..."""
-
-    return tuple(
-        (coordenada_x + desplazamiento_x, coordenada_y + desplazamiento_y)
-        for coordenada_x, coordenada_y in coordenadas_pieza
-    )
-
-
 # ACCIONES JUGADOR
 def mover(juego, direccion):
     """..."""
 
     coordenadas_deseadas = juego["PIEZA_ACTUAL"].trasladarse(direccion, 0)
-    if juego["TABLERO"].revisar_coordenadas_pieza(coordenadas_deseadas):
+    if juego["TABLERO"].son_coordenadas_validas(coordenadas_deseadas):
         juego["PIEZA_ACTUAL"].actualizar(coordenadas_deseadas)
 
 
@@ -144,7 +113,7 @@ def descender_rapido(juego):
 
     pieza = juego["PIEZA_ACTUAL"].trasladarse()
 
-    while juego["TABLERO"].revisar_coordenadas_pieza(pieza):
+    while juego["TABLERO"].son_coordenadas_validas(pieza):
         juego["PIEZA_ACTUAL"].actualizar(pieza)
         pieza = juego["PIEZA_ACTUAL"].trasladarse()
 
@@ -166,7 +135,7 @@ def rotar_pieza(juego, piezas):
     nueva_pieza = Pieza(pieza_rotada)
     pieza_trasladada = nueva_pieza.trasladarse(coordenada_1[0], coordenada_1[1])
 
-    if juego["TABLERO"].revisar_coordenadas_pieza(pieza_trasladada):
+    if juego["TABLERO"].son_coordenadas_validas(pieza_trasladada):
         juego["PIEZA_ACTUAL"] = nueva_pieza
         juego["PIEZA_ACTUAL"].actualizar(pieza_trasladada)
 
