@@ -18,19 +18,13 @@ def main():
             if event.type == gamelib.EventType.KeyPress:
                 tecla = event.key.upper()
                 if tecla == "A":
-                    juego["PIEZA_ACTUAL"] = mover(
-                        juego, juego["PIEZA_ACTUAL"], IZQUIERDA
-                    )
+                    mover(juego, IZQUIERDA)
                 elif tecla == "D":
-                    juego["PIEZA_ACTUAL"] = mover(juego, juego["PIEZA_ACTUAL"], DERECHA)
+                    mover(juego, DERECHA)
                 elif tecla == "W":
-                    juego["PIEZA_ACTUAL"] = rotar_pieza(
-                        juego, juego["PIEZA_ACTUAL"], piezas
-                    )
+                    rotar_pieza(juego, piezas)
                 elif tecla == "S":
-                    juego["PIEZA_ACTUAL"] = descender_rapido(
-                        juego, juego["PIEZA_ACTUAL"]
-                    )
+                    descender_rapido(juego)
                 elif tecla == "P":
                     gamelib.wait(gamelib.EventType.KeyPress)
                 elif tecla == "ESCAPE":
