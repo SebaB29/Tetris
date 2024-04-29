@@ -3,6 +3,7 @@ from src.tetris import *
 
 ESPERA_DESCENDER = 20
 
+
 def main():
     # Inicializar el estado del juego
     gamelib.resize(ANCHO_VENTANA, ALTO_VENTANA)
@@ -17,13 +18,19 @@ def main():
             if event.type == gamelib.EventType.KeyPress:
                 tecla = event.key.upper()
                 if tecla == "A":
-                    juego["PIEZA_ACTUAL"] = mover(juego["TABLERO"], juego["PIEZA_ACTUAL"], IZQUIERDA)
+                    juego["PIEZA_ACTUAL"] = mover(
+                        juego, juego["PIEZA_ACTUAL"], IZQUIERDA
+                    )
                 elif tecla == "D":
-                    juego["PIEZA_ACTUAL"] = mover(juego["TABLERO"], juego["PIEZA_ACTUAL"], DERECHA)
+                    juego["PIEZA_ACTUAL"] = mover(juego, juego["PIEZA_ACTUAL"], DERECHA)
                 elif tecla == "W":
-                    juego["PIEZA_ACTUAL"] = rotar_pieza(juego["TABLERO"], juego["PIEZA_ACTUAL"], piezas)
+                    juego["PIEZA_ACTUAL"] = rotar_pieza(
+                        juego, juego["PIEZA_ACTUAL"], piezas
+                    )
                 elif tecla == "S":
-                    juego["PIEZA_ACTUAL"] = descender_rapido(juego["TABLERO"], juego["PIEZA_ACTUAL"])
+                    juego["PIEZA_ACTUAL"] = descender_rapido(
+                        juego, juego["PIEZA_ACTUAL"]
+                    )
                 elif tecla == "P":
                     gamelib.wait(gamelib.EventType.KeyPress)
                 elif tecla == "ESCAPE":
@@ -38,14 +45,13 @@ def main():
         graficar_titulo()
         graficar_tablero()
         graficar_teclas()
-        graficar_elemento(juego["TABLERO"], PIEZA)
-        graficar_elemento(juego["TABLERO"], SUPERFICIE)
+        graficar_elemento(juego["TABLERO"].get_tablero(), PIEZA)
+        graficar_elemento(juego["TABLERO"].get_tablero(), SUPERFICIE)
         graficar_tablero_pieza_siguiente()
         graficar_pieza_siguiente(juego["CUADRO_PIEZA_SIG"], PIEZA)
         gamelib.draw_end()
 
-
-    nombre_jugador = (gamelib.input("Ingrese su nombre"))
+    nombre_jugador = gamelib.input("Ingrese su nombre")
     if nombre_jugador:
         guardar_puntaje(nombre_jugador.upper(), juego["PUNTOS"])
     tabla_puntuaciones = cargar_tabla_puntuaciones()
@@ -56,7 +62,10 @@ def main():
     gamelib.draw_end()
 
     event = gamelib.wait(gamelib.EventType.ButtonPress)
-    if event.x in range(int(ANCHO_BOTON[0]), int(ANCHO_BOTON[1]) + 1) and event.y in range(ALTO_BOTON[0], ALTO_BOTON[1] + 1):
+    if event.x in range(
+        int(ANCHO_BOTON[0]), int(ANCHO_BOTON[1]) + 1
+    ) and event.y in range(ALTO_BOTON[0], ALTO_BOTON[1] + 1):
         main()
+
 
 gamelib.init(main)
