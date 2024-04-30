@@ -8,22 +8,21 @@ def main():
     # Inicializar el estado del juego
     gamelib.resize(ANCHO_VENTANA, ALTO_VENTANA)
 
-    piezas = obtener_piezas()
-    juego = crear_juego(piezas)
+    juego = Tetris()
 
     timer_bajar = ESPERA_DESCENDER
-    while gamelib.loop(fps=90) and not terminar_juego(juego["PIEZA_ACTUAL"]):
+    while gamelib.loop(fps=90) and not juego.terminar_juego():
         for event in gamelib.get_events():
             if event.type == gamelib.EventType.KeyPress:
                 tecla = event.key.upper()
                 if tecla == "A":
-                    mover(juego, IZQUIERDA)
+                    juego.mover(IZQUIERDA)
                 elif tecla == "D":
-                    mover(juego, DERECHA)
+                    juego.mover(DERECHA)
                 elif tecla == "W":
-                    rotar_pieza(juego, piezas)
+                    juego.rotar_pieza()
                 elif tecla == "S":
-                    descender_rapido(juego)
+                    juego.descender_rapido()
                 elif tecla == "P":
                     gamelib.wait(gamelib.EventType.KeyPress)
                 elif tecla == "ESCAPE":
@@ -32,22 +31,22 @@ def main():
         timer_bajar -= 1
         if timer_bajar == 0:
             timer_bajar = ESPERA_DESCENDER
-            avanzar_estado_juego(juego, piezas)
+            juego.avanzar_estado_juego()
 
         gamelib.draw_begin()
         graficar_titulo()
         graficar_tablero()
         graficar_teclas()
-        graficar_elemento(juego["TABLERO"].get_tablero(), PIEZA)
-        graficar_elemento(juego["TABLERO"].get_tablero(), SUPERFICIE)
+        graficar_elemento(juego.get_tablero(), PIEZA)
+        graficar_elemento(juego.get_tablero(), SUPERFICIE)
         graficar_tablero_pieza_siguiente()
-        graficar_pieza_siguiente(juego["CUADRO_PIEZA_SIG"].get_tablero(), PIEZA)
+        graficar_pieza_siguiente(juego.get_tablero_p_siguiente(), PIEZA)
         gamelib.draw_end()
 
     nombre_jugador = gamelib.input("Ingrese su nombre")
     if nombre_jugador:
-        guardar_puntaje(nombre_jugador.upper(), juego["PUNTOS"])
-    tabla_puntuaciones = cargar_tabla_puntuaciones()
+        juego.guardar_puntaje(nombre_jugador.upper())
+    tabla_puntuaciones = juego.cargar_tabla_puntuaciones()
 
     gamelib.draw_begin()
     graficar_tabla_puntucaciones(tabla_puntuaciones)
