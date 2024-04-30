@@ -1,5 +1,6 @@
-from graphics.inter_grafica import *
+from graphics.tetris_gui import *
 from src.tetris import *
+import graphics.gamelib as gamelib
 
 ESPERA_DESCENDER = 20
 
@@ -9,6 +10,7 @@ def main():
     gamelib.resize(ANCHO_VENTANA, ALTO_VENTANA)
 
     juego = Tetris()
+    juegoGUI = TetrisGUI()
 
     timer_bajar = ESPERA_DESCENDER
     while gamelib.loop(fps=90) and not juego.terminar_juego():
@@ -33,25 +35,16 @@ def main():
             timer_bajar = ESPERA_DESCENDER
             juego.avanzar_estado_juego()
 
-        gamelib.draw_begin()
-        graficar_titulo()
-        graficar_tablero()
-        graficar_teclas()
-        graficar_elemento(juego.get_tablero(), PIEZA)
-        graficar_elemento(juego.get_tablero(), SUPERFICIE)
-        graficar_tablero_pieza_siguiente()
-        graficar_pieza_siguiente(juego.get_tablero_p_siguiente(), PIEZA)
-        gamelib.draw_end()
+        juegoGUI.graficar_estado_juego(
+            juego.get_tablero(), juego.get_tablero_p_siguiente()
+        )
 
     nombre_jugador = gamelib.input("Ingrese su nombre")
     if nombre_jugador:
         juego.guardar_puntaje(nombre_jugador.upper())
     tabla_puntuaciones = juego.cargar_tabla_puntuaciones()
 
-    gamelib.draw_begin()
-    graficar_tabla_puntucaciones(tabla_puntuaciones)
-    graficar_boton_volver_a_jugar()
-    gamelib.draw_end()
+    juegoGUI.graficar_final_del_juego(tabla_puntuaciones)
 
     event = gamelib.wait(gamelib.EventType.ButtonPress)
     if event.x in range(

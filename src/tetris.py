@@ -1,7 +1,5 @@
-from random import choice
 from src.tablero import Tablero
 from src.generador_piezas import GeneradorPieza
-from src.pieza import Pieza
 import csv
 
 FILAS_TABLERO = 18
@@ -113,7 +111,7 @@ class Tetris:
 
         pieza_rotada = self.buscar_rotacion(pieza_en_origen)
 
-        nueva_pieza = Pieza(pieza_rotada)
+        nueva_pieza = self.generador_pieza.generar_pieza(pieza_rotada)
         pieza_trasladada = nueva_pieza.trasladarse(coordenada_1[0], coordenada_1[1])
 
         if self.tablero.son_coordenadas_validas(pieza_trasladada):
