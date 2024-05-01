@@ -10,14 +10,18 @@ class GeneradorPieza:
     def __init__(self: object) -> None:
         """..."""
         self.piezas = {}
-        self.cargar_piezas()
+        self._cargar_piezas()
 
-    def get_piezas(self: object):
+    def generar_pieza(self: object, coordenadas: tuple = None) -> Pieza:
         """..."""
 
-        return self.piezas
+        if not coordenadas:
+            pieza_aleatoria = choice(list(self.piezas))
+            coordenadas = self.piezas[pieza_aleatoria][0]
 
-    def cargar_piezas(self: object) -> None:
+        return Pieza(coordenadas, self.piezas[pieza_aleatoria])
+
+    def _cargar_piezas(self: object) -> None:
         """..."""
 
         with open(ARCHIVO_PIEZAS) as archivo:
@@ -28,13 +32,3 @@ class GeneradorPieza:
                 self.piezas[pieza] = []
                 for coordenadas in grupo_coordenadas[:-2]:
                     self.piezas[pieza].append(tuple(map(eval, coordenadas.split(";"))))
-
-    def generar_pieza(self: object, coordenadas: tuple = None) -> Pieza:
-        """..."""
-
-        if not coordenadas:
-            pieza_aleatoria = choice(list(self.piezas))
-            # rotacion = randint(0, len(piezas[pieza]) - 1)
-            coordenadas = self.piezas[pieza_aleatoria][0]
-
-        return Pieza(coordenadas)

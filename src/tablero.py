@@ -1,9 +1,12 @@
+SUPERFICIE = "#"
 POSICION_LIBRE = ""
 
 
 class Tablero:
 
     def __init__(self: object, filas: int, columnas: int) -> None:
+        """..."""
+
         self.tablero = [
             [POSICION_LIBRE for columna in range(columnas)] for fila in range(filas)
         ]
@@ -12,13 +15,14 @@ class Tablero:
         self: object,
         elemento: str,
         coordenadas_elemento: tuple,
-        nuevo_elemento: str = None,
+        eliminar_elemento: bool = False,
         eliminar_filas: bool = False,
     ) -> None:
+        """..."""
 
         self._borrar_elemento(elemento)
-        if nuevo_elemento:
-            self._colocar_elemento(coordenadas_elemento, nuevo_elemento)
+        if eliminar_elemento:
+            self._colocar_elemento(coordenadas_elemento, SUPERFICIE)
         else:
             self._colocar_elemento(coordenadas_elemento, elemento)
 
@@ -26,6 +30,8 @@ class Tablero:
             self._eliminar_filas()
 
     def get_tablero(self) -> list:
+        """..."""
+
         return self.tablero
 
     def son_coordenadas_validas(self: object, pieza: tuple) -> bool:
@@ -43,7 +49,7 @@ class Tablero:
         return (
             (0 <= coordenada[0] < len(self.tablero[0]))
             and (0 <= coordenada[1] < len(self.tablero))
-            and self.tablero[coordenada[1]][coordenada[0]] != "#"  # MODIFICAR
+            and self.tablero[coordenada[1]][coordenada[0]] != SUPERFICIE  # MODIFICAR
         )
 
     def _colocar_elemento(

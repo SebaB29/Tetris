@@ -8,7 +8,6 @@ FILAS_TABLERO_P_SIGUIENTE = FILAS_TABLERO // 2
 COLUMNAS_TABLERO_P_SIGUIENTE = COLUMNAS_TABLERO // 2
 
 PIEZA = "@"
-SUPERFICIE = "#"
 IZQUIERDA, DERECHA = -1, 1
 
 
@@ -36,7 +35,7 @@ class Tetris:
 
         return self.tablero_p_siguiente.get_tablero()
 
-    def avanzar_estado_juego(self: object):
+    def avanzar_estado_juego(self: object) -> None:
         """..."""
 
         self.tablero.actualizar(
@@ -51,25 +50,25 @@ class Tetris:
             self.tablero.actualizar(
                 elemento=PIEZA,
                 coordenadas_elemento=self.pieza_actual.get_coordenadas(),
-                nuevo_elemento=SUPERFICIE,
+                eliminar_elemento=True,
                 eliminar_filas=True,
             )
-
-            self.puntos += 1
             self._intercambiar_pieza_actual_por_siguiente()
+            self.puntos += 1
 
         self.tablero_p_siguiente.actualizar(
             elemento=PIEZA,
             coordenadas_elemento=self.pieza_siguiente.get_coordenadas(),
         )
 
-    def _intercambiar_pieza_actual_por_siguiente(self: object):
+    def _intercambiar_pieza_actual_por_siguiente(self: object) -> None:
         """..."""
 
         pieza_trasladada = self.pieza_siguiente.trasladarse(COLUMNAS_TABLERO // 2, 0)
 
         if self.tablero.son_coordenadas_validas(pieza_trasladada):
-            self.pieza_actual = self.generador_pieza.generar_pieza(pieza_trasladada)
+            self.pieza_siguiente.actualizar(pieza_trasladada)
+            self.pieza_actual = self.pieza_siguiente
             self.pieza_siguiente = self.generador_pieza.generar_pieza()
 
         else:
@@ -91,45 +90,12 @@ class Tetris:
     def descender_rapido(self: object):
         """..."""
 
-        pieza = self.pieza_actual.trasladarse()
-
-        while self.tablero.son_coordenadas_validas(pieza):
-            self.pieza_actual.actualizar(pieza)
-            pieza = self.pieza_actual.trasladarse()
-
-        self.tablero.actualizar(
-            elemento=PIEZA, coordenadas_elemento=self.pieza_actual.get_coordenadas()
-        )
+        self.pieza_actual.descender_rapido(self.tablero)
 
     def rotar_pieza(self: object):
         """..."""
 
-        coordenada_1 = self.pieza_actual.get_coordenadas()[0]
-        pieza_en_origen = self.pieza_actual.trasladarse(
-            -coordenada_1[0], -coordenada_1[1]
-        )
-
-        pieza_rotada = self.buscar_rotacion(pieza_en_origen)
-
-        nueva_pieza = self.generador_pieza.generar_pieza(pieza_rotada)
-        pieza_trasladada = nueva_pieza.trasladarse(coordenada_1[0], coordenada_1[1])
-
-        if self.tablero.son_coordenadas_validas(pieza_trasladada):
-            self.pieza_actual = nueva_pieza
-            self.pieza_actual.actualizar(pieza_trasladada)
-
-    def buscar_rotacion(self: object, pieza_en_origen):
-        """..."""
-
-        piezas = self.generador_pieza.get_piezas()
-        for pieza in piezas:
-            if pieza_en_origen in piezas[pieza]:
-                i_coordenada = piezas[pieza].index(pieza_en_origen)
-                return (
-                    piezas[pieza][i_coordenada + 1]
-                    if i_coordenada + 1 < len(piezas[pieza])
-                    else piezas[pieza][0]
-                )
+        self.pieza_actual.rotar(self.tablero)
 
     # PUNTAJE
     def cargar_tabla_puntuaciones(self: object):
