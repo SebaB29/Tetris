@@ -7,9 +7,7 @@ class Tablero:
     def __init__(self: object, filas: int, columnas: int) -> None:
         """..."""
 
-        self.tablero = [
-            [POSICION_LIBRE for columna in range(columnas)] for fila in range(filas)
-        ]
+        self.tablero = [[POSICION_LIBRE for i in range(columnas)] for j in range(filas)]
 
     def actualizar(
         self: object,
@@ -49,7 +47,7 @@ class Tablero:
         return (
             (0 <= coordenada[0] < len(self.tablero[0]))
             and (0 <= coordenada[1] < len(self.tablero))
-            and self.tablero[coordenada[1]][coordenada[0]] != SUPERFICIE  # MODIFICAR
+            and self.tablero[coordenada[1]][coordenada[0]] != SUPERFICIE
         )
 
     def _colocar_elemento(
@@ -75,9 +73,7 @@ class Tablero:
 
         for fila in self.tablero:
             if not POSICION_LIBRE in fila:
-                nuevo_tablero.insert(
-                    0, [POSICION_LIBRE for columna in range(len(fila))]
-                )
+                nuevo_tablero.insert(0, [POSICION_LIBRE for i in range(len(fila))])
             else:
                 nuevo_tablero.append(fila)
 
