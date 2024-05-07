@@ -1,8 +1,7 @@
+from src.constantes import ARCHIVO_PIEZAS
 from src.pieza import Pieza
 from random import choice
 import csv
-
-ARCHIVO_PIEZAS = "resources\piezas.txt"
 
 
 class GeneradorPieza:

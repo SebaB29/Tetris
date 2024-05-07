@@ -1,24 +1,6 @@
 import graphics.gamelib as gamelib
-
-ANCHO_VENTANA, ALTO_VENTANA = (500, 500)
-MARGEN_X, MARGEN_Y = (10, 40)
-FILAS, COLUMNAS = (18, 9)
-ANCHO_TABLERO, ALTO_TABLERO = (
-    ANCHO_VENTANA / 2 - MARGEN_X,
-    ALTO_VENTANA - MARGEN_Y * 2,
-)
-ANCHO_CELDA, ALTO_CELDA = (ANCHO_TABLERO / COLUMNAS, ALTO_TABLERO / FILAS)
-ANCHO_BOTON, ALTO_BOTON = ((ANCHO_VENTANA // 4, ANCHO_VENTANA * 3 // 4), (400, 450))
-TECLAS_A_MOSTRAR = {
-    "A : IZQUIERDA": (3 / 4 * ANCHO_VENTANA - MARGEN_X, ALTO_VENTANA / 2 + 20),
-    "D : DERECHA": (3 / 4 * ANCHO_VENTANA - MARGEN_X, ALTO_VENTANA / 2 + 40),
-    "W : ROTAR": (3 / 4 * ANCHO_VENTANA - MARGEN_X, ALTO_VENTANA / 2 + 60),
-    "S : DESCENDER": (3 / 4 * ANCHO_VENTANA - MARGEN_X, ALTO_VENTANA / 2 + 80),
-    "P : PAUSA": (3 / 4 * ANCHO_VENTANA - MARGEN_X, ALTO_VENTANA / 2 + 100),
-}
-
-PIEZA = "@"
-SUPERFICIE = "#"
+from src.tablero import Tablero
+from src.constantes import *
 
 
 class TetrisGUI:
@@ -29,7 +11,7 @@ class TetrisGUI:
         gamelib.resize(ANCHO_VENTANA, ALTO_VENTANA)
 
     def graficar_estado_juego(
-        self: object, tablero: tuple, tablero_p_siguiente: tuple
+        self: object, tablero: Tablero, tablero_p_siguiente: Tablero
     ) -> None:
         """..."""
 
@@ -37,114 +19,143 @@ class TetrisGUI:
         self._graficar_titulo()
         self._graficar_tablero()
         self._graficar_teclas()
-        self._graficar_elemento(tablero, PIEZA)
-        self._graficar_elemento(tablero, SUPERFICIE)
+        self._graficar_elemento(tablero, PIEZA["SIMBOLO"], PIEZA["COLOR"])
+        self._graficar_elemento(tablero, SUPERFICIE["SIMBOLO"], SUPERFICIE["COLOR"])
         self._graficar_tablero_pieza_siguiente()
-        self._graficar_pieza_siguiente(tablero_p_siguiente, PIEZA)
+        self._graficar_titulo_tablero_pieza_siguiente()
+        self._graficar_pieza_siguiente(tablero_p_siguiente, PIEZA["SIMBOLO"])
         gamelib.draw_end()
 
     def graficar_final_del_juego(self: object, tabla_puntuaciones: list) -> None:
         """..."""
 
         gamelib.draw_begin()
-        self.graficar_tabla_puntuaciones(tabla_puntuaciones)
-        self.graficar_boton_volver_a_jugar()
+        self._graficar_tabla_puntuaciones()
+        self._graficar_titulo_tabla_puntuaciones()
+        self._graficar_puntajes(tabla_puntuaciones)
+        self._graficar_boton_volver_a_jugar()
         gamelib.draw_end()
 
     def _graficar_titulo(self: object) -> None:
         """..."""
 
-        gamelib.draw_text("TETRIS", ANCHO_VENTANA / 2, MARGEN_Y / 2)
+        gamelib.draw_text(TITULO["TEXTO"], TITULO["COORD_X"], TITULO["COORD_Y"])
 
     def _graficar_tablero(self: object) -> None:
         """..."""
 
         gamelib.draw_rectangle(
-            MARGEN_X,
-            MARGEN_Y,
-            ANCHO_VENTANA / 2,
-            ALTO_VENTANA - MARGEN_Y,
-            fill="#000",
-            outline="#02F",
-            width=2,
+            TABLERO["COORDENADAS"]["COORD_X1"],
+            TABLERO["COORDENADAS"]["COORD_Y1"],
+            TABLERO["COORDENADAS"]["COORD_X2"],
+            TABLERO["COORDENADAS"]["COORD_Y2"],
+            fill=TABLERO["COLOR"],
+            outline=TABLERO["COLOR_BORDE"],
+            width=TABLERO["GROSOR_BORDE"],
+        )
+
+    def _graficar_tablero_pieza_siguiente(self: object) -> None:
+        """..."""
+
+        gamelib.draw_rectangle(
+            TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_X1"],
+            TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y1"],
+            TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_X2"],
+            TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"],
+            fill=TABLERO["COLOR"],
+            outline=TABLERO["COLOR_BORDE"],
+            width=TABLERO["GROSOR_BORDE"],
+        )
+
+    def _graficar_titulo_tablero_pieza_siguiente(self: object) -> None:
+        """..."""
+        gamelib.draw_text(
+            TITULO_TABLERO_P_SIGUIENTE["TEXTO"],
+            TITULO_TABLERO_P_SIGUIENTE["COORD_X"],
+            TITULO_TABLERO_P_SIGUIENTE["COORD_Y"],
         )
 
     def _graficar_teclas(self: object) -> None:
         """..."""
 
-        for tecla in TECLAS_A_MOSTRAR:
+        for tecla in TECLAS:
             gamelib.draw_text(
-                tecla,
-                TECLAS_A_MOSTRAR[tecla][0] - 50,
-                TECLAS_A_MOSTRAR[tecla][1],
+                tecla + ": " + TECLAS[tecla]["INSTRUCCION"],
+                TECLAS[tecla]["COORD_X"],
+                TECLAS[tecla]["COORD_Y"],
                 anchor="w",
             )
 
-    def _graficar_elemento(self: object, tablero, elemento) -> None:
+    def _graficar_elemento(
+        self: object, tablero: Tablero, elemento: str, color: str
+    ) -> None:
         """
         Recibe: las coordenadas de un elemento (list[tuples]) y su color (str)
 
         Dibuja en la pantalla el elemento
         """
 
-        coordenadas_pixels = self._convertir_coordenadas_a_pixels(tablero, elemento)
-        for coordenada_pixels_y, coordenada_pixels_x in coordenadas_pixels:
+        coordenadas_pixels = self._convertir_coordenadas_a_pixels(
+            tablero.obtener_coordenadas_elemento(elemento)
+        )
+        for coordenada_pixels_x, coordenada_pixels_y in coordenadas_pixels:
             gamelib.draw_rectangle(
                 coordenada_pixels_x,
                 coordenada_pixels_y,
-                coordenada_pixels_x + ANCHO_CELDA,
-                coordenada_pixels_y + ALTO_CELDA,
-                fill="#0F0",
+                coordenada_pixels_x + CELDA_TABLERO["ANCHO"],
+                coordenada_pixels_y + CELDA_TABLERO["ALTO"],
+                fill=color,
             )
 
-    def _graficar_tablero_pieza_siguiente(self: object) -> None:
-        """..."""
-
-        gamelib.draw_rectangle(
-            MARGEN_X + ANCHO_VENTANA / 2,
-            MARGEN_Y,
-            ANCHO_VENTANA - MARGEN_X,
-            ALTO_VENTANA / 2,
-            fill="#000000",
-            outline="#0020FF",
-            width=2,
-        )
-        gamelib.draw_text(
-            "PIEZA SIGUIENTE", 3 / 4 * ANCHO_VENTANA - MARGEN_X, MARGEN_Y + 15
-        )
-
     def _graficar_pieza_siguiente(
-        self: object, cuadro_pieza_siguiente, elemento
+        self: object, tablero_p_siguiente: Tablero, elemento: str
     ) -> None:
         """..."""
 
         coordenadas_pixels = self._convertir_coordenadas_a_pixels(
-            cuadro_pieza_siguiente, elemento
+            tablero_p_siguiente.obtener_coordenadas_elemento(elemento)
         )
-        for coordenada_pixels_y, coordenada_pixels_x in coordenadas_pixels:
-            coordenada_pixels_x = coordenada_pixels_x + 3 / 4 * ANCHO_VENTANA - MARGEN_X
-            coordenada_pixels_y = coordenada_pixels_y + MARGEN_Y * 2
+        for coordenada_pixels_x, coordenada_pixels_y in coordenadas_pixels:
+            coordenada_pixels_x += (
+                TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_X1"]
+                + TABLERO_P_SIGUIENTE["ANCHO"] / 4
+            )
+            coordenada_pixels_y += (
+                TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y1"]
+                + TABLERO_P_SIGUIENTE["ALTO"] / 6
+            )
             gamelib.draw_rectangle(
                 coordenada_pixels_x,
                 coordenada_pixels_y,
-                coordenada_pixels_x + ANCHO_CELDA,
-                coordenada_pixels_y + ALTO_CELDA,
-                fill="#0F0",
+                coordenada_pixels_x + CELDA_TABLERO["ANCHO"],
+                coordenada_pixels_y + CELDA_TABLERO["ALTO"],
+                fill=PIEZA["COLOR"],
             )
 
-    def _graficar_tabla_puntuaciones(self: object, tabla_puntuaciones) -> None:
+    def _graficar_tabla_puntuaciones(self: object) -> None:
         """..."""
 
         gamelib.draw_rectangle(
-            MARGEN_X,
-            MARGEN_Y,
-            ANCHO_VENTANA - 5,
-            ALTO_VENTANA - 10,
-            outline="#FFF",
-            fill="#000",
-            width=5,
+            TABLA_PUNTAJES["COORDENADAS"]["COORD_X1"],
+            TABLA_PUNTAJES["COORDENADAS"]["COORD_Y1"],
+            TABLA_PUNTAJES["COORDENADAS"]["COORD_X2"],
+            TABLA_PUNTAJES["COORDENADAS"]["COORD_Y2"],
+            fill=TABLA_PUNTAJES["COLOR"],
+            outline=TABLA_PUNTAJES["COLOR_BORDE"],
+            width=TABLA_PUNTAJES["GROSOR_BORDE"],
         )
-        gamelib.draw_text("PUNTAJES", ANCHO_VENTANA / 2, MARGEN_Y + 20)
+
+    def _graficar_titulo_tabla_puntuaciones(self: object) -> None:
+        """..."""
+
+        gamelib.draw_text(
+            TITULO_TABLA_PUNTAJES["TEXTO"],
+            TITULO_TABLA_PUNTAJES["COORD_X"],
+            TITULO_TABLA_PUNTAJES["COORD_Y"],
+        )
+
+    def _graficar_puntajes(self: object, tabla_puntuaciones: list) -> None:
+        """..."""
 
         coordenada_y = MARGEN_Y + 60
         for jugador, puntos in tabla_puntuaciones:
@@ -156,28 +167,40 @@ class TetrisGUI:
         """..."""
 
         gamelib.draw_rectangle(
-            ANCHO_BOTON[0],
-            ALTO_BOTON[0],
-            ANCHO_BOTON[1],
-            ALTO_BOTON[1],
-            fill="#000",
-            outline="#FFF",
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X1"],
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y1"],
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X2"],
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y2"],
+            fill=BOTON_VOLVER_A_JUGAR["COLOR"],
+            outline=BOTON_VOLVER_A_JUGAR["COLOR_BORDE"],
         )
         gamelib.draw_text(
-            "Volver a empezar", sum(ANCHO_BOTON) / 2, sum(ALTO_BOTON) / 2, size=15
+            TITULO_BOTON_VOLVER_A_JUGAR["TEXTO"],
+            TITULO_BOTON_VOLVER_A_JUGAR["COORD_X"],
+            TITULO_BOTON_VOLVER_A_JUGAR["COORD_Y"],
+            size=TITULO_BOTON_VOLVER_A_JUGAR["SIZE"],
         )
 
-    def _convertir_coordenadas_a_pixels(self: object, tablero, elemento) -> list:
+    def _convertir_coordenadas_a_pixels(self: object, coordenadas_pieza: list) -> list:
         """..."""
 
         return [
-            (MARGEN_Y + fila * ALTO_CELDA, MARGEN_X + columna * ANCHO_CELDA)
-            for fila in range(len(tablero))
-            for columna in range(len(tablero[fila]))
-            if tablero[fila][columna] == elemento
+            (
+                TABLERO["COORDENADAS"]["COORD_X1"]
+                + TABLERO["GROSOR_BORDE"]
+                + coordenada_x * CELDA_TABLERO["ANCHO"],
+                TABLERO["COORDENADAS"]["COORD_Y1"]
+                + TABLERO["GROSOR_BORDE"]
+                + coordenada_y * CELDA_TABLERO["ALTO"],
+            )
+            for coordenada_x, coordenada_y in coordenadas_pieza
         ]
 
     def presiono_boton(self: object, event: gamelib.EventType.ButtonPress) -> bool:
-        return event.x in range(ANCHO_BOTON[0], ANCHO_BOTON[1]) and event.y in range(
-            ALTO_BOTON[0], ALTO_BOTON[1]
+        return event.x in range(
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X1"],
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X2"],
+        ) and event.y in range(
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y1"],
+            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y2"],
         )

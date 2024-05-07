@@ -1,5 +1,4 @@
-SUPERFICIE = "#"
-POSICION_LIBRE = ""
+from src.constantes import *
 
 
 class Tablero:
@@ -20,7 +19,7 @@ class Tablero:
 
         self._borrar_elemento(elemento)
         if eliminar_elemento:
-            self._colocar_elemento(coordenadas_elemento, SUPERFICIE)
+            self._colocar_elemento(coordenadas_elemento, SUPERFICIE["SIMBOLO"])
         else:
             self._colocar_elemento(coordenadas_elemento, elemento)
 
@@ -31,6 +30,16 @@ class Tablero:
         """..."""
 
         return self.tablero
+
+    def obtener_coordenadas_elemento(self: object, elemento: str) -> list:
+        """..."""
+
+        return [
+            (columna, fila)
+            for fila in range(len(self.tablero))
+            for columna in range(len(self.tablero[0]))
+            if self.tablero[fila][columna] == elemento
+        ]
 
     def son_coordenadas_validas(self: object, pieza: tuple) -> bool:
         """..."""
@@ -47,7 +56,7 @@ class Tablero:
         return (
             (0 <= coordenada[0] < len(self.tablero[0]))
             and (0 <= coordenada[1] < len(self.tablero))
-            and self.tablero[coordenada[1]][coordenada[0]] != SUPERFICIE
+            and self.tablero[coordenada[1]][coordenada[0]] != SUPERFICIE["SIMBOLO"]
         )
 
     def _colocar_elemento(
@@ -66,7 +75,7 @@ class Tablero:
                 if self.tablero[fila][columna] == elemento:
                     self.tablero[fila][columna] = POSICION_LIBRE
 
-    def _eliminar_filas(self: object):
+    def _eliminar_filas(self: object) -> None:
         """..."""
 
         nuevo_tablero = []

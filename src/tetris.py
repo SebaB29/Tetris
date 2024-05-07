@@ -1,16 +1,9 @@
 import graphics.gamelib as gamelib
-from src.sistema_puntaje import SistemaPuntaje
-from graphics.tetris_gui import TetrisGUI, ALTO_VENTANA, ANCHO_VENTANA
 from src.tablero import Tablero
 from src.generador_piezas import GeneradorPieza
-
-FILAS_TABLERO = 18
-COLUMNAS_TABLERO = 9
-FILAS_TABLERO_P_SIGUIENTE = FILAS_TABLERO // 2
-COLUMNAS_TABLERO_P_SIGUIENTE = COLUMNAS_TABLERO // 2
-
-PIEZA = "@"
-IZQUIERDA, DERECHA = -1, 1
+from graphics.tetris_gui import TetrisGUI
+from src.sistema_puntaje import SistemaPuntaje
+from src.constantes import *
 
 
 class Tetris:
@@ -18,9 +11,9 @@ class Tetris:
     def __init__(self: object) -> None:
         """..."""
 
-        self._tablero = Tablero(FILAS_TABLERO, COLUMNAS_TABLERO)
+        self._tablero = Tablero(TABLERO["FILAS"], TABLERO["COLUMNAS"])
         self._tablero_p_siguiente = Tablero(
-            FILAS_TABLERO_P_SIGUIENTE, COLUMNAS_TABLERO_P_SIGUIENTE
+            TABLERO_P_SIGUIENTE["FILAS"], TABLERO_P_SIGUIENTE["COLUMNAS"]
         )
         self._generador_pieza = GeneradorPieza()
         self._pieza_actual = self._generador_pieza.generar_pieza()
@@ -37,7 +30,7 @@ class Tetris:
             self._procesar_eventos()
             self._avanzar_estado_juego()
             self._graficador.graficar_estado_juego(
-                self._tablero.get_tablero(), self._tablero_p_siguiente.get_tablero()
+                self._tablero, self._tablero_p_siguiente
             )
 
     def final_del_juego(self: object) -> bool:
@@ -56,7 +49,8 @@ class Tetris:
         """..."""
 
         self._tablero.actualizar(
-            elemento=PIEZA, coordenadas_elemento=self._pieza_actual.get_coordenadas()
+            elemento=PIEZA["SIMBOLO"],
+            coordenadas_elemento=self._pieza_actual.get_coordenadas(),
         )
 
         coordenadas_deseadas = self._pieza_actual.trasladarse()
@@ -65,7 +59,7 @@ class Tetris:
 
         else:
             self._tablero.actualizar(
-                elemento=PIEZA,
+                elemento=PIEZA["SIMBOLO"],
                 coordenadas_elemento=self._pieza_actual.get_coordenadas(),
                 eliminar_elemento=True,
                 eliminar_filas=True,
@@ -74,14 +68,16 @@ class Tetris:
             self._puntos += 1
 
         self._tablero_p_siguiente.actualizar(
-            elemento=PIEZA,
+            elemento=PIEZA["SIMBOLO"],
             coordenadas_elemento=self._pieza_siguiente.get_coordenadas(),
         )
 
     def _intercambiar_pieza_actual_por_siguiente(self: object) -> None:
         """..."""
 
-        pieza_trasladada = self._pieza_siguiente.trasladarse(COLUMNAS_TABLERO // 2, 0)
+        pieza_trasladada = self._pieza_siguiente.trasladarse(
+            TABLERO["COLUMNAS"] // 2, 0
+        )
 
         if self._tablero.son_coordenadas_validas(pieza_trasladada):
             self._pieza_siguiente.actualizar(pieza_trasladada)
