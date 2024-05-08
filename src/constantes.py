@@ -12,8 +12,8 @@ TITULO = {"TEXTO": "TETRIS", "COORD_X": ANCHO_VENTANA / 2, "COORD_Y": MARGEN_Y /
 TABLERO = {
     "FILAS": 18,
     "COLUMNAS": 9,
-    "COLOR": "#465362",
-    "COLOR_BORDE": "#707070",
+    "COLOR": "#000000",
+    "COLOR_BORDE": "#007FFF",
     "GROSOR_BORDE": 5,
     "COORDENADAS": {
         "COORD_X1": MARGEN_X,
@@ -76,29 +76,42 @@ TITULO_BOTON_VOLVER_A_JUGAR = {
 TECLAS = {
     "A": {
         "INSTRUCCION": "IZQUIERDA",
-        "COORD_Y": ALTO_VENTANA / 2 + 30,
+        "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 15,
         "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
     },
     "D": {
         "INSTRUCCION": "DERECHA",
-        "COORD_Y": ALTO_VENTANA / 2 + 50,
+        "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 35,
         "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
     },
     "W": {
         "INSTRUCCION": "ROTAR",
-        "COORD_Y": ALTO_VENTANA / 2 + 70,
+        "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 55,
         "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
     },
     "S": {
         "INSTRUCCION": "DESCENDER",
-        "COORD_Y": ALTO_VENTANA / 2 + 90,
+        "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 75,
         "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
     },
     "P": {
         "INSTRUCCION": "PAUSA",
-        "COORD_Y": ALTO_VENTANA / 2 + 110,
+        "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 95,
         "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
     },
+}
+
+PUNTAJE = {
+    "TITULO": {
+        "TEXTO": "PUNTOS",
+        "COORD_X": TABLERO["COORDENADAS"]["COORD_X2"] + MARGEN_X * 10,
+        "COORD_Y": TECLAS["P"]["COORD_Y"] + MARGEN_Y,
+    },
+    "PUNTOS": {
+        "COORD_X": TABLERO["COORDENADAS"]["COORD_X2"] + MARGEN_X * 15,
+        "COORD_Y": TECLAS["P"]["COORD_Y"] + MARGEN_Y,
+    },
+    "COLOR": "#FFD700",
 }
 
 TABLA_PUNTAJES = {
@@ -127,7 +140,7 @@ PIEZA = {
 
 SUPERFICIE = {
     "SIMBOLO": "#",
-    "COLOR": "#800080",
+    "COLOR": "#9400D3",
 }
 
 POSICION_LIBRE = ""

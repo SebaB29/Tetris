@@ -16,6 +16,11 @@ class SistemaPuntaje:
         )
         self._puntos = 0
 
+    def obtener_puntos(self: object) -> int:
+        """..."""
+
+        return self._puntos
+
     def actualizar_puntaje(self: object, filas_eliminadas: int) -> None:
         """..."""
 

@@ -1,5 +1,6 @@
 import graphics.gamelib as gamelib
 from src.tablero import Tablero
+from src.sistema_puntaje import SistemaPuntaje
 from src.constantes import *
 
 
@@ -11,19 +12,23 @@ class TetrisGUI:
         gamelib.resize(ANCHO_VENTANA, ALTO_VENTANA)
 
     def graficar_estado_juego(
-        self: object, tablero: Tablero, tablero_p_siguiente: Tablero
+        self: object,
+        tablero: Tablero,
+        tablero_p_siguiente: Tablero,
+        sistema_puntaje: SistemaPuntaje,
     ) -> None:
         """..."""
 
         gamelib.draw_begin()
         self._graficar_titulo()
         self._graficar_tablero()
-        self._graficar_teclas()
-        self._graficar_elemento(tablero, PIEZA["SIMBOLO"], PIEZA["COLOR"])
-        self._graficar_elemento(tablero, SUPERFICIE["SIMBOLO"], SUPERFICIE["COLOR"])
         self._graficar_tablero_pieza_siguiente()
         self._graficar_titulo_tablero_pieza_siguiente()
+        self._graficar_elemento(tablero, PIEZA["SIMBOLO"], PIEZA["COLOR"])
+        self._graficar_elemento(tablero, SUPERFICIE["SIMBOLO"], SUPERFICIE["COLOR"])
         self._graficar_pieza_siguiente(tablero_p_siguiente, PIEZA["SIMBOLO"])
+        self._graficar_teclas()
+        self._graficar_puntos_actuales(sistema_puntaje.obtener_puntos())
         gamelib.draw_end()
 
     def graficar_final_del_juego(self: object, tabla_puntuaciones: list) -> None:
@@ -154,6 +159,23 @@ class TetrisGUI:
             TITULO_TABLA_PUNTAJES["COORD_Y"],
         )
 
+    def _graficar_puntos_actuales(self: object, puntos: int) -> None:
+        """..."""
+
+        gamelib.draw_text(
+            PUNTAJE["TITULO"]["TEXTO"],
+            PUNTAJE["TITULO"]["COORD_X"],
+            PUNTAJE["TITULO"]["COORD_Y"],
+            bold=True,
+        )
+        gamelib.draw_text(
+            puntos,
+            PUNTAJE["PUNTOS"]["COORD_X"],
+            PUNTAJE["PUNTOS"]["COORD_Y"],
+            fill=PUNTAJE["COLOR"],
+            bold=True,
+        )
+
     def _graficar_puntajes(self: object, tabla_puntuaciones: list) -> None:
         """..."""
 
@@ -197,10 +219,16 @@ class TetrisGUI:
         ]
 
     def presiono_boton(self: object, event: gamelib.EventType.ButtonPress) -> bool:
-        return event.x in range(
-            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X1"],
-            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X2"],
-        ) and event.y in range(
-            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y1"],
-            BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y2"],
+        return (
+            event
+            and event.x
+            in range(
+                BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X1"],
+                BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_X2"],
+            )
+            and event.y
+            in range(
+                BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y1"],
+                BOTON_VOLVER_A_JUGAR["COORDENADAS"]["COORD_Y2"],
+            )
         )

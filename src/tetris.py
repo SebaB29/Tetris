@@ -32,7 +32,7 @@ class Tetris:
             self._procesar_eventos()
             self._avanzar_estado_juego()
             self._graficador.graficar_estado_juego(
-                self._tablero, self._tablero_p_siguiente
+                self._tablero, self._tablero_p_siguiente, self._sistema_puntos
             )
 
     def final_del_juego(self: object) -> bool:
