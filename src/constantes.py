@@ -1,13 +1,13 @@
 # ARCHIVOS
 ARCHIVO_PIEZAS = "resources\piezas.txt"
 
-# VENTANA JUEGO
-ANCHO_VENTANA = 500
-ALTO_VENTANA = 500
-MARGEN_X = 10
-MARGEN_Y = 50
-
-TITULO = {"TEXTO": "TETRIS", "COORD_X": ANCHO_VENTANA / 2, "COORD_Y": MARGEN_Y / 2}
+VENTANA = {
+    "TITULO": "TETRIS",
+    "ANCHO": 500,
+    "ALTO": 500,
+    "MARGEN_X": 10,
+    "MARGEN_Y": 50,
+}
 
 TABLERO = {
     "FILAS": 18,
@@ -16,13 +16,13 @@ TABLERO = {
     "COLOR_BORDE": "#007FFF",
     "GROSOR_BORDE": 5,
     "COORDENADAS": {
-        "COORD_X1": MARGEN_X,
-        "COORD_X2": ANCHO_VENTANA / 2,
-        "COORD_Y1": MARGEN_Y,
-        "COORD_Y2": ALTO_VENTANA - MARGEN_Y,
+        "COORD_X1": VENTANA["MARGEN_X"],
+        "COORD_X2": VENTANA["ANCHO"] / 2,
+        "COORD_Y1": VENTANA["MARGEN_Y"],
+        "COORD_Y2": VENTANA["ALTO"] - VENTANA["MARGEN_Y"],
     },
-    "ANCHO": ANCHO_VENTANA / 2 - MARGEN_X,
-    "ALTO": ALTO_VENTANA - 2 * MARGEN_Y,
+    "ANCHO": VENTANA["ANCHO"] / 2 - VENTANA["MARGEN_X"],
+    "ALTO": VENTANA["ALTO"] - 2 * VENTANA["MARGEN_Y"],
 }
 
 CELDA_TABLERO = {
@@ -35,13 +35,13 @@ TABLERO_P_SIGUIENTE = {
     "COLUMNAS": TABLERO["COLUMNAS"] // 2,
     "GROSOR_BORDE": 5,
     "COORDENADAS": {
-        "COORD_X1": MARGEN_X + ANCHO_VENTANA / 2,
-        "COORD_X2": ANCHO_VENTANA - MARGEN_X,
-        "COORD_Y1": MARGEN_Y,
-        "COORD_Y2": ALTO_VENTANA / 2,
+        "COORD_X1": VENTANA["MARGEN_X"] + VENTANA["ANCHO"] / 2,
+        "COORD_X2": VENTANA["ANCHO"] - VENTANA["MARGEN_X"],
+        "COORD_Y1": VENTANA["MARGEN_Y"],
+        "COORD_Y2": VENTANA["ALTO"] / 2,
     },
-    "ANCHO": ANCHO_VENTANA / 2 - 2 * MARGEN_X,
-    "ALTO": ALTO_VENTANA / 2 - MARGEN_Y,
+    "ANCHO": VENTANA["ANCHO"] / 2 - 2 * VENTANA["MARGEN_X"],
+    "ALTO": VENTANA["ALTO"] / 2 - VENTANA["MARGEN_Y"],
 }
 
 TITULO_TABLERO_P_SIGUIENTE = {
@@ -55,12 +55,12 @@ BOTON_VOLVER_A_JUGAR = {
     "COLOR": "#000",
     "COLOR_BORDE": "#FFF",
     "COORDENADAS": {
-        "COORD_X1": ANCHO_VENTANA // 4,
-        "COORD_X2": ANCHO_VENTANA * 3 // 4,
+        "COORD_X1": VENTANA["ANCHO"] // 4,
+        "COORD_X2": VENTANA["ANCHO"] * 3 // 4,
         "COORD_Y1": 400,
         "COORD_Y2": 450,
     },
-    "ANCHO": ANCHO_VENTANA * 3 // 4 - ANCHO_VENTANA // 4,
+    "ANCHO": VENTANA["ANCHO"] * 3 // 4 - VENTANA["ANCHO"] // 4,
     "ALTO": 50,
 }
 
@@ -77,39 +77,39 @@ TECLAS = {
     "A": {
         "INSTRUCCION": "IZQUIERDA",
         "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 15,
-        "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
+        "COORD_X": 4 / 6 * VENTANA["ANCHO"] - VENTANA["MARGEN_X"],
     },
     "D": {
         "INSTRUCCION": "DERECHA",
         "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 35,
-        "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
+        "COORD_X": 4 / 6 * VENTANA["ANCHO"] - VENTANA["MARGEN_X"],
     },
     "W": {
         "INSTRUCCION": "ROTAR",
         "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 55,
-        "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
+        "COORD_X": 4 / 6 * VENTANA["ANCHO"] - VENTANA["MARGEN_X"],
     },
     "S": {
         "INSTRUCCION": "DESCENDER",
         "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 75,
-        "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
+        "COORD_X": 4 / 6 * VENTANA["ANCHO"] - VENTANA["MARGEN_X"],
     },
     "P": {
         "INSTRUCCION": "PAUSA",
         "COORD_Y": TABLERO_P_SIGUIENTE["COORDENADAS"]["COORD_Y2"] + 95,
-        "COORD_X": 4 / 6 * ANCHO_VENTANA - MARGEN_X,
+        "COORD_X": 4 / 6 * VENTANA["ANCHO"] - VENTANA["MARGEN_X"],
     },
 }
 
 PUNTAJE = {
     "TITULO": {
         "TEXTO": "PUNTOS",
-        "COORD_X": TABLERO["COORDENADAS"]["COORD_X2"] + MARGEN_X * 10,
-        "COORD_Y": TECLAS["P"]["COORD_Y"] + MARGEN_Y,
+        "COORD_X": TABLERO["COORDENADAS"]["COORD_X2"] + VENTANA["MARGEN_X"] * 8,
+        "COORD_Y": TECLAS["P"]["COORD_Y"] + VENTANA["MARGEN_Y"],
     },
     "PUNTOS": {
-        "COORD_X": TABLERO["COORDENADAS"]["COORD_X2"] + MARGEN_X * 15,
-        "COORD_Y": TECLAS["P"]["COORD_Y"] + MARGEN_Y,
+        "COORD_X": TABLERO["COORDENADAS"]["COORD_X2"] + VENTANA["MARGEN_X"] * 19,
+        "COORD_Y": TECLAS["P"]["COORD_Y"] + VENTANA["MARGEN_Y"],
     },
     "COLOR": "#FFD700",
 }
@@ -119,17 +119,17 @@ TABLA_PUNTAJES = {
     "COLOR_BORDE": "#FFF",
     "GROSOR_BORDE": 5,
     "COORDENADAS": {
-        "COORD_X1": MARGEN_X,
-        "COORD_X2": ANCHO_VENTANA - 5,
-        "COORD_Y1": MARGEN_Y,
-        "COORD_Y2": ALTO_VENTANA - 10,
+        "COORD_X1": VENTANA["MARGEN_X"],
+        "COORD_X2": VENTANA["ANCHO"] - 5,
+        "COORD_Y1": VENTANA["MARGEN_Y"],
+        "COORD_Y2": VENTANA["ALTO"] - 10,
     },
 }
 
 TITULO_TABLA_PUNTAJES = {
     "TEXTO": "PUNTAJE",
-    "COORD_X": ANCHO_VENTANA / 2,
-    "COORD_Y": MARGEN_Y + 20,
+    "COORD_X": VENTANA["ANCHO"] / 2,
+    "COORD_Y": VENTANA["MARGEN_Y"] + 20,
 }
 
 # ELEMENTOS
