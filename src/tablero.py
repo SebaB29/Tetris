@@ -14,7 +14,7 @@ class Tablero:
         coordenadas_elemento: tuple,
         eliminar_elemento: bool = False,
         eliminar_filas: bool = False,
-    ) -> None:
+    ) -> int:
         """..."""
 
         self._borrar_elemento(elemento)
@@ -23,8 +23,11 @@ class Tablero:
         else:
             self._colocar_elemento(coordenadas_elemento, elemento)
 
+        filas_eliminadas = 0
         if eliminar_filas:
-            self._eliminar_filas()
+            filas_eliminadas = self._eliminar_filas()
+
+        return filas_eliminadas
 
     def get_tablero(self) -> list:
         """..."""
@@ -75,15 +78,18 @@ class Tablero:
                 if self.tablero[fila][columna] == elemento:
                     self.tablero[fila][columna] = POSICION_LIBRE
 
-    def _eliminar_filas(self: object) -> None:
+    def _eliminar_filas(self: object) -> int:
         """..."""
 
         nuevo_tablero = []
+        filas_eliminadas = 0
 
         for fila in self.tablero:
             if not POSICION_LIBRE in fila:
                 nuevo_tablero.insert(0, [POSICION_LIBRE for i in range(len(fila))])
+                filas_eliminadas += 1
             else:
                 nuevo_tablero.append(fila)
 
         self.tablero = nuevo_tablero
+        return filas_eliminadas

@@ -18,13 +18,15 @@ class Tetris:
         self._generador_pieza = GeneradorPieza()
         self._pieza_actual = self._generador_pieza.generar_pieza()
         self._pieza_siguiente = self._generador_pieza.generar_pieza()
-        self._puntos = 0
+        self._sistema_puntos = SistemaPuntaje()
 
         self._graficador = TetrisGUI()
-        self._sistema_puntos = SistemaPuntaje()
 
     def transcurso_del_juego(self: object) -> None:
         """..."""
+
+        pieza_trasladada = self._pieza_actual.trasladarse(TABLERO["COLUMNAS"] // 2, 0)
+        self._pieza_actual.actualizar(pieza_trasladada)
 
         while gamelib.loop(fps=5) and self._pieza_actual:
             self._procesar_eventos()
@@ -36,7 +38,7 @@ class Tetris:
     def final_del_juego(self: object) -> bool:
         """..."""
 
-        self._sistema_puntos.guardar_puntaje(self._puntos)
+        self._sistema_puntos.guardar_puntaje()
         self._graficador.graficar_final_del_juego(
             self._sistema_puntos.obtener_puntajes_mas_altos()
         )
@@ -58,14 +60,14 @@ class Tetris:
             self._pieza_actual.actualizar(coordenadas_deseadas)
 
         else:
-            self._tablero.actualizar(
+            filas_eliminadas = self._tablero.actualizar(
                 elemento=PIEZA["SIMBOLO"],
                 coordenadas_elemento=self._pieza_actual.get_coordenadas(),
                 eliminar_elemento=True,
                 eliminar_filas=True,
             )
             self._intercambiar_pieza_actual_por_siguiente()
-            self._puntos += 1
+            self._sistema_puntos.actualizar_puntaje(filas_eliminadas)
 
         self._tablero_p_siguiente.actualizar(
             elemento=PIEZA["SIMBOLO"],
@@ -83,7 +85,6 @@ class Tetris:
             self._pieza_siguiente.actualizar(pieza_trasladada)
             self._pieza_actual = self._pieza_siguiente
             self._pieza_siguiente = self._generador_pieza.generar_pieza()
-
         else:
             self._pieza_actual = None
 
