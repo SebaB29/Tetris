@@ -31,4 +31,4 @@ para almacenar los puntajes y hago pequeños cambios de la interfaz.
 # Gráficos
 La interfaz gráfica se creo utilizando la librería [Gamelib](https://github.com/dessaya/python-gamelib)
 
-![Gif DEMO Tetris](https://github.com/SebaB29/Tetris/blob/main/img/TetrisDemo.gif)
+<img alt="Gif DEMO Tetris" src="https://github.com/SebaB29/Tetris/blob/main/img/TetrisDemo.gif" width=400px height=400px>
