@@ -1,25 +1,34 @@
 # Tetris
 
-Trabajo Práctico de la materia Algoritmos y Programación I.
+Remake del Trabajo Práctico de la materia Algoritmos y Programación I.
+
+# Descripción
+Modifico la implementación hecha para la materia Algoritmos y Programación I.
+Aplico la programación orientada a objetos, utilizo una base de datos
+para almacenar los puntajes y hago pequeños cambios de la interfaz.
 
 # Archivos
 * main.py: archivo principal donde se ejecuta el desarrollo del juego.
 
-SRC:
-  * tetris.py: contiene las funciones encargadas de la lógica del juego.
+#### SRC:
+  * constantes.py: contiene las constantes necesarias para las funciones.
+  * generador_piezas.py: contiene la clase encargada de generar las piezas.
+  * pieza.py: contiene la clase encargada del funcionamiento de la pieza.
+  * sistema_puntaje.py: contiene la clase encargada del sistema de puntuación.
+  * tablero.py: contiene la clase encargada del funcionamiento del tablero.
+  * tetris.py: contiene la clase encargada de la lógica del juego.
 
-RESOURCES:
+#### RESOURCES:
   * piezas.txt: contiene las coordenadas de las distintas piezas que apareceran.
 
-GRAPHICS:
+#### GRAPHICS:
   * gamelib.py: librería utilizada para crear la interfaz gráfica y algunos procesos del juego.
-  * inter_grafica.py: contiene las funciones gráficas creadas a partir de la librería gamelib para crear la interfaz gráfica.
- 
-IMG:
+  * tetris_gui.py: contiene la clase encargada de crear la interfaz gráfica.
+
+#### IMG:
   * imágenes de muestra del juego.
 
 # Gráficos
-La interfaz gráfica se creo utilizando la librería extraída [Gamelib](https://github.com/dessaya/python-gamelib)
+La interfaz gráfica se creo utilizando la librería [Gamelib](https://github.com/dessaya/python-gamelib)
 
-![Tetris](https://github.com/SebaB29/Tetris/blob/main/img/tetris.jpg)
-![Puntaje](https://github.com/SebaB29/Tetris/blob/main/img/puntaje.jpg)
+![Gif DEMO Tetris](img\TetrisDemo.gif)
