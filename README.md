@@ -75,6 +75,7 @@ Tetris/
 │   ├── tablero.py
 │   └── tetris.py
 ├── main.py
+├── README.md
 ├── LICENSE
 └── .gitignore
 ```
