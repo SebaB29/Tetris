@@ -11,8 +11,10 @@ Welcome to **Tetris**, a classic puzzle game where you arrange falling blocks to
 - [File Structure](#file-structure)
 - [Technologies](#technologies)
 - [Contributing](#contributing)
-- [License](#license)
 - [About This Project](#about)
+- [License](#license)
+- [Security Policy](#security-policy)
+- [Code of Conduct](#code-of-conduct)
 
 ## 🕹️ Features <a name="features"></a>
 
@@ -60,6 +62,12 @@ The project structure is as follows:
 
 ```
 Tetris/
+├── .github/
+│   ├── CODE_OF_CONDUCT.md
+│   ├── CONTRIBUTING.md
+│   ├── SECURITY.md
+│   └── ISSUE_TEMPLATE/
+│       └── bug_report.md
 ├── graphics/
 │   ├── gamelib.py
 │   └── tetris_gui.py
@@ -96,18 +104,26 @@ This project is built with:
 
 ## 🤝 Contributing <a name="contributing"></a>
 
-Contributions are welcome! If you'd like to improve the game, feel free to fork the repository and submit a pull request.
+Contributions are welcome! Please check the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file for detailed guidelines on how to contribute.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+1. Fork the repository  
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)  
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)  
+4. Push to the branch (`git push origin feature/AmazingFeature`)  
 5. Open a pull request
+
+## 📚 About This Project <a name="about"></a>
+
+This project was developed as a practical assignment for university. It aims to implement the classic Tetris game using Python, focusing on game logic, graphical interface, and data management through object-oriented programming principles.
 
 ## 📄 License <a name="license"></a>
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## 📚 About This Project <a name="about"></a>
+## 🔐 Security Policy <a name="security-policy"></a>
 
-This project was developed as a practical assignment for university. It aims to implement the classic Tetris game using Python, focusing on game logic, graphical interface, and data management through object-oriented programming principles.
+Please review our [SECURITY.md](.github/SECURITY.md) for security-related information and how to report vulnerabilities.
+
+## 📜 Code of Conduct <a name="code-of-conduct"></a>
+
+This project follows the [Contributor Covenant Code of Conduct](.github/CODE_OF_CONDUCT.md). By participating, you agree to abide by its guidelines.
