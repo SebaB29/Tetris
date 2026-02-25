@@ -1,129 +1,88 @@
-# Tetris Game 🎮
+# 🎮 Tetris Game
 
-Welcome to **Tetris**, a classic puzzle game where you arrange falling blocks to clear lines and score points. This project is an implementation of the iconic game in Python, developed using object-oriented programming principles.
+Welcome to **Tetris**, a classic puzzle game implementation in Python. Arrange falling blocks (Tetrominoes) to clear lines, score points, and save your high scores in a local database. This project focuses on Object-Oriented Programming (OOP) and persistent data management.
 
-## 📜 Table of Contents
+# 📸 Demo
+<div align="center">
+    <img alt="Tetris Gameplay Demo" src="img/TetrisDemo.gif" width="400px">
+</div>
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Demo](#demo)
-- [File Structure](#file-structure)
-- [Technologies](#technologies)
-- [Contributing](#contributing)
-- [About This Project](#about)
-- [License](#license)
-- [Security Policy](#security-policy)
-- [Code of Conduct](#code-of-conduct)
+# 📍 Table of Contents
+- [📝 Description](#-description)
+  - [🧩 Key Features](#-key-features)
+  - [🧱 Project Structure](#-project-structure)
+  - [🛠️ Technologies](#️-technologies)
+- [🚀 Getting Started](#-getting-started)
+  - [📋 Prerequisites](#-prerequisites)
+  - [⚙️ Installation](#️-installation)
+- [💡 Usage](#-usage)
+- [🤝 Contributing](#-contributing)
+- [👥 Team](#-team)
+- [📄 License](#-license)
 
-## 🕹️ Features <a name="features"></a>
+# 📝 Description
+This project is a university assignment designed to master complex game logic and data persistence. It features a custom graphical interface and a backend system to manage player scores using SQLite.
 
-- Classic Tetris gameplay
-- Random piece generation from a predefined set
-- Score system with database storage
-- Graphical interface with intuitive controls
+## 🧩 Key Features
+- **Classic Mechanics:** Line clearing, block rotation, and increasing difficulty.
+- **Persistent Scoring:** High scores are saved locally using an SQLite3 database.
+- **Customizable Pieces:** Tetromino shapes are loaded from an external configuration file (`piezas.txt`).
+- **Game State Management:** Includes pause, game over, and real-time score tracking.
 
-## 🚀 Installation <a name="installation"></a>
+## 🧱 Project Structure
+```text
+Tetris/
+├── graphics/    # UI rendering and Gamelib integration
+├── img/         # Demo GIF and screenshots
+├── resources/   # Piece definitions (piezas.txt)
+├── src/         # Core logic
+│   ├── tablero.py        # Grid logic
+│   ├── pieza.py          # Tetromino behavior
+│   ├── sistema_puntaje.py # SQL database management
+│   └── tetris.py         # Main game engine
+└── main.py      # Entry point
+```
 
-To run this project locally, follow these steps:
+## 🛠️ Technologies
+* **Python 3.x**
+* **SQLite3**: For persistent score storage.
+* **Gamelib**: A thread-based rendering library.
 
+# 🚀 Getting Started
+## 📋 Prerequisites
+* Python 3.10 or higher.
+* SQLite3 (usually bundled with Python).
+
+## ⚙️ Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SebaB29/Tetris.git
-   ```
-
-2. Navigate to the project directory:
-   ```bash
+   git clone [https://github.com/SebaB29/Tetris.git](https://github.com/SebaB29/Tetris.git)
    cd Tetris
    ```
+2. Ensure resources are present:
+   Make sure resources/piezas.txt is in the directory before running.
 
-3. Run the game:
-   ```bash
-   python main.py
-   ```
-
-## 🎮 Usage <a name="usage"></a>
-
-Use the following controls to play the game:
-
-- **A**: Move left
-- **D**: Move right
-- **W**: Rotate piece
-- **S**: Drop piece quickly
-- **P**: Pause
-
-## 📽️ Demo <a name="demo"></a>
-
-<img alt="Gif DEMO Tetris" src="img/TetrisDemo.gif" width=400px height=400px>
-
-## 📁 File Structure <a name="file-structure"></a>
-
-The project structure is as follows:
-
-```
-Tetris/
-├── .github/
-│   ├── CODE_OF_CONDUCT.md
-│   ├── CONTRIBUTING.md
-│   ├── SECURITY.md
-│   └── ISSUE_TEMPLATE/
-│       └── bug_report.md
-├── graphics/
-│   ├── gamelib.py
-│   └── tetris_gui.py
-├── img/
-│   └── TetrisDemo.gif
-├── resources/
-│   └── piezas.txt
-├── src/
-│   ├── constantes.py
-│   ├── generador_pieza.py
-│   ├── pieza.py
-│   ├── sistema_puntaje.py
-│   ├── tablero.py
-│   └── tetris.py
-├── main.py
-├── README.md
-├── LICENSE
-└── .gitignore
+# 💡 Usage
+Launch the game by running:
+```bash
+python main.py
 ```
 
-- **graphics/**: Contains graphical libraries for rendering the game.
-- **img/**: Includes a demo GIF showcasing the game's functionality.
-- **resources/**: Contains the pieces configuration file (`piezas.txt`).
-- **src/**: Includes source code files responsible for various game functionalities.
-- **main.py**: The entry point of the application.
+## 🎮 Controls
+| Key         | Action         |
+|-------------|----------------|
+| Arrow Up    | Move Up        |
+| Arrow Down  | Move Down      |
+| Arrow Left  | Move Left      |
+| Arrow Right | Move Right     |
+| P           | Pause / Resume |
 
-## 🛠️ Technologies <a name="technologies"></a>
+# 🤝 Contributing
+1. Fork the project.
+2. Create your Feature Branch (git checkout -b feature/AmazingFeature).
+3. Commit your changes (git commit -m 'Add some AmazingFeature').
+4. Push to the Branch (git push origin feature/AmazingFeature).
+5. Open a Pull Request.
 
-This project is built with:
-
-- Python
-- SQLite3 (for score management)
-- [Gamelib](https://github.com/dessaya/python-gamelib) (A library created by the instructor to facilitate the use of threads and rendering for the interface)
-
-## 🤝 Contributing <a name="contributing"></a>
-
-Contributions are welcome! Please check the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file for detailed guidelines on how to contribute.
-
-1. Fork the repository  
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)  
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)  
-4. Push to the branch (`git push origin feature/AmazingFeature`)  
-5. Open a pull request
-
-## 📚 About This Project <a name="about"></a>
-
-This project was developed as a practical assignment for university. It aims to implement the classic Tetris game using Python, focusing on game logic, graphical interface, and data management through object-oriented programming principles.
-
-## 📄 License <a name="license"></a>
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## 🔐 Security Policy <a name="security-policy"></a>
-
-Please review our [SECURITY.md](.github/SECURITY.md) for security-related information and how to report vulnerabilities.
-
-## 📜 Code of Conduct <a name="code-of-conduct"></a>
-
-This project follows the [Contributor Covenant Code of Conduct](.github/CODE_OF_CONDUCT.md). By participating, you agree to abide by its guidelines.
+# 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
