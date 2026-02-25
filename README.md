@@ -17,7 +17,6 @@ Welcome to **Tetris**, a classic puzzle game implementation in Python. Arrange f
   - [⚙️ Installation](#️-installation)
 - [💡 Usage](#-usage)
 - [🤝 Contributing](#-contributing)
-- [👥 Team](#-team)
 - [📄 License](#-license)
 
 # 📝 Description
