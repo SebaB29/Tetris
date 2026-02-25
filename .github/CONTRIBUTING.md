@@ -1,20 +1,27 @@
-# Contribuir al proyecto Tetris 🎮
+# Contributing to Tetris Game
 
-¡Gracias por tu interés en contribuir! Este proyecto fue desarrollado como trabajo práctico universitario, pero cualquier mejora, corrección o idea es bienvenida.
+Thank you for your interest in contributing! This project was developed as a university assignment, but any improvements, bug fixes, or new ideas are more than welcome to make this puzzle classic even better.
 
-## Cómo contribuir
+## How to Contribute
 
-1. **Fork** el repositorio
-2. Crea tu rama: `git checkout -b feature/nueva-funcionalidad`
-3. Realizá tus cambios y confirmalos: `git commit -m "Agrega nueva funcionalidad"`
-4. Empujá tu rama: `git push origin feature/nueva-funcionalidad`
-5. Abrí un Pull Request
+1. **Fork** the repository.
+2. Create your branch: `git checkout -b feature/new-functionality`.
+3. Make your changes and commit them: `git commit -m "Add new functionality"`.
+4. Push your branch: `git push origin feature/new-functionality`.
+5. Open a **Pull Request**.
 
-## Ideas para contribuir
+## Ideas for Contribution
 
-- Nuevos modos de juego
-- Mejoras gráficas o animaciones
-- Mejor balance de dificultad
-- Refactor de código a patrones más limpios
+- **New Game Modes:** Implement "Sprint" (clear 40 lines), "Ultra" (score as much as possible in 3 minutes), or "Versus" mode.
+- **Visual Improvements:** Add animations for line clears, ghost piece (shadow where the piece will land), or custom block skins.
+- **Advanced Scoring:** Implement a "Combo" system or T-Spin detection for higher scores.
+- **Enhanced Data Management:** Improve the SQLite implementation to include player profiles, dates, or online leaderboards.
+- **Code Refactoring:** Decouple the GUI from the game logic or improve the piece rotation system (SRS - Super Rotation System).
 
-Gracias por tu colaboración 🎉
+## Development Tips
+
+- **Database Safety:** If you modify the `sistema_puntaje.py`, ensure the database connection is handled safely to avoid corrupting the `.db` file.
+- **Piece Configuration:** New Tetromino shapes can be added directly to `resources/piezas.txt`. Check the format before adding new ones.
+- **Clean Logic:** Keep the grid manipulation inside `tablero.py` and the piece logic inside `pieza.py`.
+
+Thank you for your collaboration! 🎉
