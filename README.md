@@ -55,7 +55,7 @@ Tetris/
 ## ⚙️ Installation
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/SebaB29/Tetris.git](https://github.com/SebaB29/Tetris.git)
+   git clone git@github.com:SebaB29/Tetris.git
    cd Tetris
    ```
 2. Ensure resources are present:
